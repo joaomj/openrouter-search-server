@@ -93,7 +93,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
     }
 
     const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
-        model: 'google/gemini-pro:online',
+        model: 'google/gemini-2.5-pro-exp-03-25:free:online', // Updated model name
         messages: [{
           role: 'user',
           content: query
@@ -115,30 +115,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
 
       const rawContent: string = response.data.choices[0].message.content;
 
-      // Parsing needs refinement based on actual Gemini Pro :online output format.
-      // This is a placeholder assuming newline-separated results.
-      const results: SearchResult[] = rawContent
-        .split('\n') // Adjust delimiter if needed
-        .map((line: string) => line.trim())
-        .filter((line: string) => line)
-        .map((line: string): SearchResult | null => {
-            // Basic parsing - adjust based on actual output format
-            // Example: "Title - Snippet - https://example.com"
-            const parts = line.split(' - ');
-            if (parts.length >= 2) {
-                const title = parts[0];
-                const link = parts[parts.length - 1].startsWith('http') ? parts.pop() : '';
-                const snippet = parts.slice(1).join(' - ');
-                return { title: title || 'N/A', link: link || '', snippet: snippet || 'N/A' };
-            }
-            return null; // Or handle single-line results differently
-        })
-        .filter((result): result is SearchResult => result !== null);
-
-
+      // Return the raw content directly as the result
       return {
-        content: [{ type: 'json', json: { results } }],
+        content: [{ type: 'text', text: rawContent }],
       };
+
     } catch (error: any) {
       console.error('Search error:', error.response?.data || error.message);
       const errorMessage = error.response?.data?.error?.message || error.message || 'Unknown error';
