@@ -2,6 +2,7 @@
   "name": "openrouter-search-server",
   "version": "1.0.0",
   "description": "MCP server for OpenRouter web search",
+  "type": "module",
   "main": "build/index.js",
   "scripts": {
     "build": "tsc",
