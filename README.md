@@ -83,4 +83,4 @@ Once the server is configured and running (either manually via `npm start` in it
 ```
 
 ## License
-
+MIT.
