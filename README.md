@@ -1,3 +1,7 @@
+# Attention
+
+Archived repo. For future developments see: https://github.com/joaomj/openrouter-websearch-mcp
+
 # OpenRouter Search MCP Server
 
 This is a Model Context Protocol (MCP) server designed to provide web search capabilities by leveraging the OpenRouter API.
